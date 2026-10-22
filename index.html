@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101322">
+<title>آروین | ماشین‌حساب حرفه‌ای</title>
+<style>
+:root{--bg:#101322;--panel:#191d31;--panel2:#222740;--text:#f7f8ff;--muted:#9ca4c2;--accent:#8b7cff;--accent2:#6b5cff;--op:#2b3150;--danger:#ff6b82;--shadow:0 18px 50px #0004}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#282448 0,#101322 55%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;display:flex;align-items:center;justify-content:center;padding:18px}
+.app{width:min(100%,430px);background:var(--panel);border:1px solid #ffffff12;border-radius:30px;padding:20px;box-shadow:var(--shadow);overflow:hidden}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.brand{display:flex;align-items:center;gap:10px}.logo{width:43px;height:43px;border-radius:15px;background:linear-gradient(135deg,#a99fff,#6352f4);display:grid;place-items:center;font-size:23px;box-shadow:0 7px 18px #6b5cff55}.brand h1{font-size:18px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:11px}.head-actions{display:flex;gap:8px}.mini{border:1px solid #ffffff12;background:var(--panel2);color:var(--text);width:39px;height:39px;border-radius:13px;font-size:17px;cursor:pointer}
+.screen{background:linear-gradient(145deg,#111528,#171b30);border:1px solid #ffffff0b;border-radius:22px;padding:18px 16px 16px;min-height:140px;display:flex;flex-direction:column;justify-content:flex-end;margin-bottom:15px}.expression{min-height:30px;color:var(--muted);font-size:18px;overflow-wrap:anywhere;text-align:left;direction:ltr}.result{font-size:clamp(32px,9vw,43px);font-weight:650;letter-spacing:-1px;text-align:left;direction:ltr;overflow-wrap:anywhere;margin-top:8px}.screen-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:8px;color:var(--muted);font-size:11px}.copy{background:none;border:0;color:#b8b1ff;font:inherit;cursor:pointer}
+.tabs{display:flex;gap:7px;margin:0 0 12px}.tab{flex:1;border:1px solid #ffffff10;background:transparent;color:var(--muted);padding:10px 5px;border-radius:12px;font-size:12px;cursor:pointer}.tab.active{background:#7770ff22;color:#c5bfff;border-color:#8b7cff77}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.key{height:57px;border:0;border-radius:17px;background:var(--panel2);color:var(--text);font-size:20px;font-weight:550;cursor:pointer;transition:transform .08s,filter .15s;box-shadow:inset 0 1px #ffffff09;user-select:none}.key:active{transform:scale(.96);filter:brightness(1.25)}.key.fn{font-size:15px;color:#c9c4ff;background:#292744}.key.op{background:var(--op);color:#bdb7ff;font-size:22px}.key.danger{color:#ff9aaa;background:#482536}.key.equal{background:linear-gradient(135deg,#9b8eff,#6654f6);box-shadow:0 8px 20px #6957ff44;font-size:25px}.key.zero{grid-column:span 2}.scientific{display:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}.scientific.show{display:grid}.scientific .key{height:44px;font-size:14px;border-radius:13px;background:#26263f;color:#d8d4ff}.history{display:none;margin-top:14px;border-top:1px solid #ffffff12;padding-top:12px}.history.show{display:block}.history-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}.history-head button{background:none;border:0;color:var(--danger);cursor:pointer}.history-list{max-height:170px;overflow:auto}.history-item{padding:10px 12px;border-radius:12px;background:#ffffff06;margin-bottom:7px;cursor:pointer}.history-item .h-exp{color:var(--muted);font-size:12px;direction:ltr;text-align:left}.history-item .h-res{font-size:17px;direction:ltr;text-align:left;margin-top:4px}.footer{text-align:center;color:#727b9b;font-size:10px;margin-top:15px}
+body.light{--bg:#f0f1fa;--panel:#fff;--panel2:#f0f1fb;--text:#20233a;--muted:#747b98;--op:#e8e7fb;--shadow:0 18px 50px #3332;background:linear-gradient(145deg,#f4f2ff,#e9edfb)}body.light .screen{background:#f7f7ff;border-color:#dddff5}body.light .key{box-shadow:inset 0 1px #fff}body.light .scientific .key{background:#efedff;color:#5549bb}body.light .history-item{background:#f4f3ff}
+ .overlay{position:fixed;inset:0;background:#050711bb;display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:20;backdrop-filter:blur(7px)}.overlay.open{display:flex}.sheet{width:min(100%,430px);background:var(--panel);border:1px solid #ffffff1a;border-radius:26px;padding:20px;box-shadow:0 20px 70px #0006;animation:rise .18s ease-out}.sheet-head{display:flex;align-items:center;justify-content:space-between;font-size:17px}.close{border:0;background:var(--panel2);color:var(--text);width:34px;height:34px;border-radius:11px;font-size:16px}.sheet-note{color:var(--muted);font-size:12px;line-height:1.8}.theme-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.theme-option{display:grid;text-align:right;gap:6px;padding:12px;background:var(--panel2);border:1px solid #ffffff12;border-radius:16px;color:var(--text);cursor:pointer}.theme-option b{font-size:13px}.theme-option small{color:var(--muted);font-size:11px}.swatch{height:35px;border-radius:10px;border:1px solid #ffffff22}.dark-swatch{background:linear-gradient(120deg,#101322 50%,#8b7cff 50%)}.light-swatch{background:linear-gradient(120deg,#f8f8ff 50%,#b7b9d5 50%)}.purple-swatch{background:linear-gradient(120deg,#251744 50%,#d36bff 50%)}.classic-swatch{background:linear-gradient(120deg,#10263e 50%,#35b9e8 50%)}.about-sheet{text-align:center}.creator-logo{width:66px;height:66px;border-radius:22px;background:linear-gradient(135deg,#a99fff,#6352f4);display:grid;place-items:center;font-size:34px;margin:20px auto 10px}.about-sheet h2{margin:0;font-size:20px}.creator-card{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:var(--panel2);border-radius:13px;margin-top:9px;font-size:13px}.creator-card span{color:var(--muted)}.creator-card strong{direction:ltr}.contact-btn{width:100%;border:0;border-radius:14px;padding:13px;background:#168c60;color:white;font:inherit;font-weight:650;margin-top:13px;cursor:pointer}.disclaimer{font-size:10px;line-height:1.8;color:var(--muted);margin-bottom:0}@keyframes rise{from{transform:translateY(15px);opacity:.5}to{transform:translateY(0);opacity:1}}
+body.purple{--bg:#1b1029;--panel:#26183a;--panel2:#35224b;--text:#fff8ff;--muted:#c1a8d1;--op:#432755;--accent:#d36bff;background:radial-gradient(ellipse at top,#4c2368 0,#1b1029 60%)}body.purple .screen{background:linear-gradient(145deg,#1c112c,#2b1940)}body.purple .key.equal{background:linear-gradient(135deg,#ed8cff,#9b42e8)}body.classic{--bg:#0d1c2b;--panel:#13283b;--panel2:#1c354c;--text:#f4fbff;--muted:#9bb4c8;--op:#20445e;background:radial-gradient(ellipse at top,#174566 0,#0d1c2b 60%)}body.classic .screen{background:linear-gradient(145deg,#0d1b2b,#153047)}body.classic .key.equal{background:linear-gradient(135deg,#45c9ef,#1888d3)}
+@media(max-width:360px){.app{padding:14px;border-radius:24px}.key{height:51px;border-radius:14px}.grid{gap:7px}.scientific{gap:6px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header>
+ <div class="brand"><div class="logo">∑</div><div><h1>آروین</h1><p>ماشین‌حساب حرفه‌ای</p></div></div>
+ <div class="head-actions"><button class="mini" id="themesBtn" aria-label="قالب‌ها">🎨</button><button class="mini" id="aboutBtn" aria-label="درباره سازنده">ⓘ</button><button class="mini" id="historyBtn" aria-label="تاریخچه">◷</button></div>
+</header>
+<section class="screen" aria-live="polite">
+ <div class="expression" id="expression">0</div>
+ <div class="result" id="result">0</div>
+ <div class="screen-bottom"><span id="status">آماده محاسبه</span><button class="copy" id="copyBtn">کپی نتیجه ⧉</button></div>
+</section>
+<div class="tabs"><button class="tab active" id="basicTab">رایگان</button><button class="tab" id="scientificTab">علمی 🔒</button><button class="tab" id="premiumBtn">حرفه‌ای 🔒</button></div>
+<div class="scientific" id="scientific">
+ <button class="key" data-insert="sin(">sin</button><button class="key" data-insert="cos(">cos</button><button class="key" data-insert="tan(">tan</button><button class="key" data-insert="sqrt(">√x</button>
+ <button class="key" data-insert="log(">log</button><button class="key" data-insert="ln(">ln</button><button class="key" data-insert="^2">x²</button><button class="key" data-insert="^">xʸ</button>
+ <button class="key" data-insert="π">π</button><button class="key" data-insert="e">e</button><button class="key" data-insert="(">(</button><button class="key" data-insert=")">)</button>
+ <button class="key" data-insert="!">n!</button><button class="key" data-insert="%">%</button><button class="key" data-insert="ANS">ANS</button><button class="key" data-insert="÷">÷</button>
+</div>
+<div class="grid" id="keys">
+ <button class="key danger" data-action="clear">AC</button><button class="key fn" data-action="back">⌫</button><button class="key fn" data-insert="(">( )</button><button class="key op" data-insert="÷">÷</button>
+ <button class="key" data-insert="7">7</button><button class="key" data-insert="8">8</button><button class="key" data-insert="9">9</button><button class="key op" data-insert="×">×</button>
+ <button class="key" data-insert="4">4</button><button class="key" data-insert="5">5</button><button class="key" data-insert="6">6</button><button class="key op" data-insert="−">−</button>
+ <button class="key" data-insert="1">1</button><button class="key" data-insert="2">2</button><button class="key" data-insert="3">3</button><button class="key op" data-insert="+">+</button>
+ <button class="key fn" data-action="sign">±</button><button class="key zero" data-insert="0">0</button><button class="key" data-insert=".">.</button><button class="key equal" data-action="equals">=</button>
+</div>
+<section class="history" id="history"><div class="history-head"><strong>تاریخچه محاسبات</strong><button id="clearHistory">پاک‌کردن</button></div><div class="history-list" id="historyList"><div style="color:var(--muted);font-size:12px">هنوز محاسبه‌ای ثبت نشده.</div></div></section>
+<div class="footer">آروین • سریع، ساده، دقیق</div>
+<section class="overlay" id="themesPanel" aria-hidden="true">
+ <div class="sheet">
+  <div class="sheet-head"><strong>انتخاب ظاهر برنامه</strong><button class="close" data-close="themesPanel">✕</button></div>
+  <p class="sheet-note">قالب دلخواهت را انتخاب کن.</p>
+  <div class="theme-options">
+   <button class="theme-option" data-theme="dark"><span class="swatch dark-swatch"></span><b>تیره حرفه‌ای</b><small>مدرن و چشم‌نواز</small></button>
+   <button class="theme-option" data-theme="light"><span class="swatch light-swatch"></span><b>روشن ساده</b><small>واضح و مینیمال</small></button>
+   <button class="theme-option" data-theme="purple"><span class="swatch purple-swatch"></span><b>بنفش مدرن</b><small>رنگی و جذاب</small></button>
+   <button class="theme-option" data-theme="classic"><span class="swatch classic-swatch"></span><b>کلاسیک آبی</b><small>ساده و آشنا</small></button>
+  </div>
+ </div>
+</section>
+<section class="overlay" id="premiumPanel" aria-hidden="true">
+ <div class="sheet">
+  <div class="sheet-head"><strong>آروین حرفه‌ای</strong><button class="close" data-close="premiumPanel">✕</button></div>
+  <div class="creator-logo">♛</div>
+  <h2 style="text-align:center">امکانات بیشتر با یک خرید</h2>
+  <p class="sheet-note">نسخهٔ حرفه‌ای شامل محاسبات علمی، چهار قالب ظاهری، تاریخچه و تنظیمات پیشرفته است.</p>
+  <div class="creator-card"><span>ماشین‌حساب پایه</span><strong>رایگان</strong></div>
+  <div class="creator-card"><span>آروین حرفه‌ای</span><strong>۱۰٬۰۰۰ تومان</strong></div>
+  <button class="contact-btn" id="buyBtn">خرید نسخهٔ حرفه‌ای</button>
+  <p class="disclaimer" id="buyNotice">نمونهٔ نمایشی: پرداخت هنوز به بازار یا مایکت وصل نیست. پیش از انتشار باید پرداخت رسمی فروشگاه در نسخهٔ اندروید پیاده‌سازی و آزمایش شود.</p>
+ </div>
+</section>
+<section class="overlay" id="aboutPanel" aria-hidden="true">
+ <div class="sheet about-sheet">
+  <div class="sheet-head"><strong>دربارهٔ آروین</strong><button class="close" data-close="aboutPanel">✕</button></div>
+  <div class="creator-logo">∑</div>
+  <h2>ماشین‌حساب آروین</h2>
+  <p class="sheet-note">یک ماشین‌حساب ساده و کاربردی با امکانات علمی و قالب‌های متنوع.</p>
+  <div class="creator-card"><span>سازنده</span><strong>لقمان عزیزی</strong></div>
+  <div class="creator-card"><span>واتساپ / تماس</span><strong dir="ltr">09185575571</strong></div>
+  <button class="contact-btn" id="contactBtn">ارتباط از طریق واتساپ</button>
+  <p class="disclaimer">نسخهٔ آزمایشی؛ برای انتشار عمومی، ساخت نسخهٔ اندروید و بررسی الزامات فروشگاه لازم است.</p>
+ </div>
+</section>
+</main>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+let expr='',lastAnswer=0,justEvaluated=false,history=[];
+const expressionEl=$('expression'),resultEl=$('result'),statusEl=$('status');
+const pretty=s=>s.replace(/\*/g,'×').replace(/\//g,'÷').replace(/-/g,'−');
+function render(){expressionEl.textContent=expr?pretty(expr):'0';try{const val=expr?evaluate(expr):0;resultEl.textContent=fmt(val);statusEl.textContent='پیش‌نمایش نتیجه'}catch{resultEl.textContent=expr?'…':'0';statusEl.textContent=expr?'در حال ورود عبارت':'آماده محاسبه'}}
+function fmt(n){if(!Number.isFinite(n))throw Error('نامعتبر');if(Math.abs(n)<1e-12)n=0;return Number(n.toPrecision(12)).toLocaleString('en-US',{maximumFractionDigits:10,useGrouping:false})}
+function factorial(n){if(n<0||n>170||!Number.isInteger(n))throw Error('فاکتوریل نامعتبر');let r=1;for(let i=2;i<=n;i++)r*=i;return r}
+function tokenize(s){
+ s=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/π/g,'pi').replace(/\s/g,'');
+ const tokens=[],re=/((?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?|[A-Za-z]+|[()+\-*/^%!])/gy;let i=0;
+ while(i<s.length){re.lastIndex=i;const m=re.exec(s);if(!m)throw Error('عبارت نامعتبر');tokens.push(m[1]);i=re.lastIndex}
+ const out=[];const ends=t=>/^(?:\d|pi$|e$|ANS$|[)!%])/.test(t)||t===')';const starts=t=>/^(?:\d|pi$|e$|ANS$|[A-Za-z]+$|\()/.test(t)||t==='(';
+ for(const t of tokens){if(out.length&&ends(out[out.length-1])&&starts(t)&&t!=='!'&&t!=='%')out.push('*');out.push(t)}return out;
+}
+function evaluate(input){
+ const ts=tokenize(input);let p=0;
+ const peek=()=>ts[p],take=()=>ts[p++];
+ function primary(){let t=take();if(t===undefined)throw Error();
+  if(t==='+')return unary();if(t==='-')return -unary();
+  if(t==='('){let v=add();if(take()!==')')throw Error();return v}
+  if(!isNaN(Number(t))&&t!=='')return Number(t);
+  if(t==='pi')return Math.PI;if(t==='e')return Math.E;if(t==='ANS')return lastAnswer;
+  if(['sin','cos','tan','sqrt','log','ln','abs','floor','ceil'].includes(t)){let v;if(peek()==='('){take();v=add();if(take()!==')')throw Error()}else v=primary();const a={sin:Math.sin,cos:Math.cos,tan:Math.tan,sqrt:Math.sqrt,log:x=>Math.log10(x),ln:Math.log,abs:Math.abs,floor:Math.floor,ceil:Math.ceil}[t];return a(v)}
+  throw Error();
+ }
+ function postfix(){let v=primary();while(peek()==='!'||peek()==='%'){let op=take();v=op==='!'?factorial(v):v/100}return v}
+ function power(){let v=postfix();if(peek()==='^'){take();v=Math.pow(v,unary())}return v}
+ function unary(){if(peek()==='+'){take();return unary()}if(peek()==='-'){take();return -unary()}return power()}
+ function mul(){let v=unary();while(peek()==='*'||peek()==='/'){let op=take(),b=unary();v=op==='*'?v*b:v/b}return v}
+ function add(){let v=mul();while(peek()==='+'||peek()==='-'){let op=take(),b=mul();v=op==='+'?v+b:v-b}return v}
+ const value=add();if(p<ts.length||!Number.isFinite(value))throw Error('نتیجه نامعتبر');return value
+}
+function insert(s){if(justEvaluated&&!/[+\-−×÷*/^%!)]/.test(s))expr='';justEvaluated=false;if(s==='ANS')s='ANS';expr+=s;render()}
+function equals(){if(!expr)return;try{const val=evaluate(expr);const out=fmt(val);history.unshift({expr:pretty(expr),out});history=history.slice(0,30);lastAnswer=val;expressionEl.textContent=pretty(expr)+' =';resultEl.textContent=out;statusEl.textContent='محاسبه انجام شد';justEvaluated=true;drawHistory()}catch{statusEl.textContent='عبارت یا نتیجه نامعتبر است';resultEl.textContent='خطا'}}
+function drawHistory(){const list=$('historyList');if(!history.length){list.innerHTML='<div style="color:var(--muted);font-size:12px">هنوز محاسبه‌ای ثبت نشده.</div>';return}list.innerHTML='';history.forEach(item=>{const d=document.createElement('div');d.className='history-item';const a=document.createElement('div');a.className='h-exp';a.textContent=item.expr;const b=document.createElement('div');b.className='h-res';b.textContent='= '+item.out;d.append(a,b);d.onclick=()=>{expr=item.expr.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');justEvaluated=false;render();$('history').classList.remove('show')};list.append(d)})}
+document.querySelectorAll('[data-insert]').forEach(b=>b.addEventListener('click',()=>insert(b.dataset.insert)));
+document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.action;if(a==='clear'){expr='';justEvaluated=false;render()}if(a==='back'){expr=expr.slice(0,-1);justEvaluated=false;render()}if(a==='equals')equals();if(a==='sign'){if(!expr)expr='-';else expr='-('+expr+')';justEvaluated=false;render()}}));
+$('basicTab').onclick=()=>{$('basicTab').classList.add('active');$('scientificTab').classList.remove('active');$('scientific').classList.remove('show')};
+$('scientificTab').onclick=()=>{$('premiumPanel').classList.add('open')};
+$('premiumBtn').onclick=()=>{$('premiumPanel').classList.add('open')};
+$('buyBtn').onclick=()=>{$('buyNotice').textContent='خرید واقعی هنوز فعال نیست. بعد از تبدیل برنامه به APK باید پرداخت رسمی فروشگاه و تأیید خرید به این دکمه متصل شود.'};
+$('historyBtn').onclick=()=>{$('premiumPanel').classList.add('open')};
+$('clearHistory').onclick=()=>{history=[];drawHistory()};
+function setTheme(theme){document.body.classList.remove('light','purple','classic');if(theme!=='dark')document.body.classList.add(theme);document.querySelectorAll('.theme-option').forEach(b=>b.style.outline=b.dataset.theme===theme?'2px solid var(--accent)':'none');}
+$('themesBtn').onclick=()=>$('themesPanel').classList.add('open');
+$('aboutBtn').onclick=()=>$('aboutPanel').classList.add('open');
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove('open'));
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
+document.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{if(b.dataset.theme!=='dark'){$('premiumPanel').classList.add('open');return}setTheme(b.dataset.theme)});
+$('contactBtn').onclick=()=>window.open('https://wa.me/989185575571','_blank');
+$('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(resultEl.textContent);statusEl.textContent='نتیجه کپی شد'}catch{statusEl.textContent='کپی در این مرورگر پشتیبانی نمی‌شود'}};
+document.addEventListener('keydown',e=>{if(/^[0-9.]$/.test(e.key))insert(e.key);else if(e.key==='+')insert('+');else if(e.key==='-')insert('-');else if(e.key==='*')insert('×');else if(e.key==='/'){e.preventDefault();insert('÷')}else if(e.key==='('||e.key===')')insert(e.key);else if(e.key==='Enter'||e.key==='='){e.preventDefault();equals()}else if(e.key==='Backspace'){expr=expr.slice(0,-1);render()}else if(e.key==='Escape'){expr='';render()}});
+render();
+})();
+</script>
+</body>
+</html>
